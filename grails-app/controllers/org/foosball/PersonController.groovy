@@ -1,7 +1,8 @@
 package org.foosball
 
 import org.foosball.Person;
-import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.dao.DataIntegrityViolationException;
+import grails.plugins.springsecurity.Secured;
 
 class PersonController {
 
@@ -19,10 +20,12 @@ class PersonController {
 		[personInstanceList: personInstanceList, personInstanceTotal: Person.count()]
     }
 
+	@Secured(['ROLE_USER'])
     def create() {
         [personInstance: new Person(params)]
     }
 
+	@Secured(['ROLE_USER'])
     def save() {
         def personInstance = new Person(params)
         if (!personInstance.save(flush: true)) {
@@ -45,6 +48,7 @@ class PersonController {
         [personInstance: personInstance]
     }
 
+	@Secured(['ROLE_USER'])
     def edit(Long id) {
         def personInstance = Person.get(id)
         if (!personInstance) {
@@ -56,6 +60,7 @@ class PersonController {
         [personInstance: personInstance]
     }
 
+	@Secured(['ROLE_USER'])
     def update(Long id, Long version) {
         def personInstance = Person.get(id)
         if (!personInstance) {
@@ -85,6 +90,7 @@ class PersonController {
         redirect(action: "show", id: personInstance.id)
     }
 
+	@Secured(['ROLE_USER'])
     def delete(Long id) {
         def personInstance = Person.get(id)
         if (!personInstance) {

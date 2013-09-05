@@ -12,7 +12,7 @@
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+				<li><g:link class="create" action="create" params="['sessionId': sessionId]"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
 		<div id="list-result" class="content scaffold-list" role="main">
@@ -55,7 +55,9 @@
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${resultInstanceTotal}" />
+				<g:each in="${sessionList}" status="j" var="sessionInstance">
+					<g:link action="list" id="${sessionInstance?.id}">${fieldValue(bean: sessionInstance, field: "id")}</g:link>
+				</g:each>
 			</div>
 		</div>
 	</body>

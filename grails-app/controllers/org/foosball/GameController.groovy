@@ -1,7 +1,8 @@
 package org.foosball
 
 import org.foosball.Game;
-import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.dao.DataIntegrityViolationException;
+import grails.plugins.springsecurity.Secured;
 
 class GameController {
 
@@ -16,10 +17,12 @@ class GameController {
         [gameInstanceList: Game.list(params), gameInstanceTotal: Game.count()]
     }
 
+	@Secured(['ROLE_USER'])
     def create() {
 		[gameInstance: new Game(params)]
     }
 
+	@Secured(['ROLE_USER'])
     def save() {
         def gameInstance = new Game(params)
         if (!gameInstance.save(flush: true)) {
@@ -42,6 +45,7 @@ class GameController {
         [gameInstance: gameInstance]
     }
 
+	@Secured(['ROLE_USER'])
     def edit(Long id) {
         def gameInstance = Game.get(id)
         if (!gameInstance) {
@@ -53,6 +57,7 @@ class GameController {
         [gameInstance: gameInstance, resultInstance: gameInstance.result]
     }
 
+	@Secured(['ROLE_USER'])
     def update(Long id, Long version) {
         def gameInstance = Game.get(id)
         if (!gameInstance) {
@@ -82,6 +87,7 @@ class GameController {
         redirect(controller: "result", action: "show", id: gameInstance.result.id)
     }
 
+	@Secured(['ROLE_USER'])
     def delete(Long id) {
         def gameInstance = Game.get(id)
         if (!gameInstance) {

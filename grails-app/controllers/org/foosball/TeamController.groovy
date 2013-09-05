@@ -1,7 +1,8 @@
 package org.foosball
 
 import org.foosball.Team;
-import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.dao.DataIntegrityViolationException;
+import grails.plugins.springsecurity.Secured;
 
 class TeamController {
 
@@ -15,11 +16,13 @@ class TeamController {
         params.max = Math.min(max ?: 10, 100)
         [teamInstanceList: Team.list(params), teamInstanceTotal: Team.count()]
     }
-
+	
+	@Secured(['ROLE_USER'])
     def create() {
         [teamInstance: new Team(params)]
     }
-
+	
+	@Secured(['ROLE_USER'])
     def save() {
         def teamInstance = new Team(params)
         if (!teamInstance.save(flush: true)) {
@@ -30,7 +33,7 @@ class TeamController {
         flash.message = message(code: 'default.created.message', args: [message(code: 'team.label', default: 'Team'), teamInstance.id])
         redirect(action: "show", id: teamInstance.id)
     }
-
+	
     def show(Long id) {
         def teamInstance = Team.get(id)
         if (!teamInstance) {
@@ -41,7 +44,8 @@ class TeamController {
 
         [teamInstance: teamInstance]
     }
-
+	
+	@Secured(['ROLE_USER'])
     def edit(Long id) {
         def teamInstance = Team.get(id)
         if (!teamInstance) {
@@ -52,7 +56,8 @@ class TeamController {
 
         [teamInstance: teamInstance]
     }
-
+	
+	@Secured(['ROLE_USER'])
     def update(Long id, Long version) {
         def teamInstance = Team.get(id)
         if (!teamInstance) {
@@ -81,7 +86,8 @@ class TeamController {
         flash.message = message(code: 'default.updated.message', args: [message(code: 'team.label', default: 'Team'), teamInstance.id])
         redirect(action: "show", id: teamInstance.id)
     }
-
+	
+	@Secured(['ROLE_USER'])
     def delete(Long id) {
         def teamInstance = Team.get(id)
         if (!teamInstance) {

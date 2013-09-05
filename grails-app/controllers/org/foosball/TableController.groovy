@@ -3,6 +3,7 @@ package org.foosball
 import org.foosball.Playoff;
 import org.foosball.Session;
 import org.foosball.Team;
+import org.foosball.SecUser;
 import org.springframework.dao.DataIntegrityViolationException
 
 class TableController {
@@ -12,7 +13,7 @@ class TableController {
 	}
 
 	def table(Integer id) {
-		Integer sessionId = getCurrentSession()
+		Integer sessionId = Session.getCurrentSession()
 		if (id) {
 			sessionId = id
 		}
@@ -36,9 +37,4 @@ class TableController {
 		[teamInstanceList: teamInstanceList, teamInstanceTotal: Team.count(), sessionList: Session.list(), sessionId: sessionId, finalMatch: finalMatchInstance]
 	}
 
-	private Integer getCurrentSession() {
-		Session.createCriteria().get {
-			projections { max "id" }
-		} as Integer
-	}
 }

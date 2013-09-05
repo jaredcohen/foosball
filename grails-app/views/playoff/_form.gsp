@@ -22,7 +22,7 @@
 		<g:message code="playoff.winner.label" default="Winner" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="winner" name="winner.id" from="${org.foosball.Team.list()}" optionKey="id" optionValue="name" required="true" value="${playoffInstance?.winner?.id}" class="many-to-one"/>
+	<g:select id="winner" name="winner.id" from="${org.foosball.Team.findAll { session == playoffInstance.sessionId }}" optionKey="id" optionValue="name" required="true" value="${playoffInstance?.winner?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: playoffInstance, field: 'opponent', 'error')} required">
@@ -30,7 +30,7 @@
 		<g:message code="playoff.opponent.label" default="Opponent" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="opponent" name="opponent.id" from="${org.foosball.Team.list()}" optionKey="id" optionValue="name" required="true" value="${playoffInstance?.opponent?.id}" class="many-to-one"/>
+	<g:select id="opponent" name="opponent.id" from="${org.foosball.Team.findAll { session == playoffInstance.sessionId }}" optionKey="id" optionValue="name" required="true" value="${playoffInstance?.opponent?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: playoffInstance, field: 'sessionId', 'error')} required">

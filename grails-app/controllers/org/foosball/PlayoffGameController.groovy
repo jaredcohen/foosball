@@ -1,7 +1,8 @@
 package org.foosball
 
 import org.foosball.PlayoffGame;
-import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.dao.DataIntegrityViolationException;
+import grails.plugins.springsecurity.Secured;
 
 class PlayoffGameController {
 
@@ -16,10 +17,12 @@ class PlayoffGameController {
         [playoffGameInstanceList: PlayoffGame.list(params), playoffGameInstanceTotal: PlayoffGame.count()]
     }
 
+	@Secured(['ROLE_USER'])
     def create() {
         [playoffGameInstance: new PlayoffGame(params)]
     }
-
+	
+	@Secured(['ROLE_USER'])
     def save() {
         def playoffGameInstance = new PlayoffGame(params)
         if (!playoffGameInstance.save(flush: true)) {
@@ -41,7 +44,8 @@ class PlayoffGameController {
 
         [playoffGameInstance: playoffGameInstance]
     }
-
+	
+	@Secured(['ROLE_USER'])
     def edit(Long id) {
         def playoffGameInstance = PlayoffGame.get(id)
         if (!playoffGameInstance) {
@@ -52,7 +56,8 @@ class PlayoffGameController {
 
         [playoffGameInstance: playoffGameInstance]
     }
-
+	
+	@Secured(['ROLE_USER'])
     def update(Long id, Long version) {
         def playoffGameInstance = PlayoffGame.get(id)
         if (!playoffGameInstance) {
@@ -81,7 +86,8 @@ class PlayoffGameController {
         flash.message = message(code: 'default.updated.message', args: [message(code: 'playoffGame.label', default: 'PlayoffGame'), playoffGameInstance.id])
         redirect(controller: "playoff", action: "show", id: playoffGameInstance.result.id)
     }
-
+	
+	@Secured(['ROLE_USER'])
     def delete(Long id) {
         def playoffGameInstance = PlayoffGame.get(id)
         if (!playoffGameInstance) {

@@ -1,7 +1,8 @@
 package org.foosball
 
 import org.foosball.Result;
-import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.dao.DataIntegrityViolationException;
+import grails.plugins.springsecurity.Secured;
 
 class ResultController {
 
@@ -11,17 +12,21 @@ class ResultController {
         redirect(action: "list", params: params)
     }
 
-    def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-		params.sort = 'id'
-		params.order = 'desc'
-        [resultInstanceList: Result.list(params), resultInstanceTotal: Result.count()]
+	def list(Integer id) {
+		Integer sessionId = Session.getCurrentSession()
+		if (id) {
+			sessionId = id
+		}
+		def resultInstanceList = Result.findAll(sort:'id', order: 'desc') { sessionId == sessionId }
+        [resultInstanceList: resultInstanceList, resultInstanceTotal: Result.count(), sessionList: Session.list(), sessionId: sessionId]
+	}
+	
+	@Secured(['ROLE_USER'])
+    def create(Integer id) {
+		[resultInstance: new Result(params), sessionId: id]
     }
-
-    def create() {
-		[resultInstance: new Result(params)]
-    }
-
+	
+	@Secured(['ROLE_USER'])
     def save() {
         def resultInstance = new Result(params)
         if (!resultInstance.save(flush: true)) {
@@ -32,7 +37,7 @@ class ResultController {
         flash.message = message(code: 'default.created.message', args: [message(code: 'result.label', default: 'Result'), resultInstance.id])
         redirect(action: "show", id: resultInstance.id)
     }
-
+	
     def show(Long id) {
         def resultInstance = Result.get(id)
         if (!resultInstance) {
@@ -43,7 +48,8 @@ class ResultController {
 
         [resultInstance: resultInstance]
     }
-
+	
+	@Secured(['ROLE_USER'])
     def edit(Long id) {
         def resultInstance = Result.get(id)
         if (!resultInstance) {
@@ -54,7 +60,8 @@ class ResultController {
 
         [resultInstance: resultInstance]
     }
-
+	
+	@Secured(['ROLE_USER'])
     def update(Long id, Long version) {
         def resultInstance = Result.get(id)
         if (!resultInstance) {
@@ -83,7 +90,8 @@ class ResultController {
         flash.message = message(code: 'default.updated.message', args: [message(code: 'result.label', default: 'Result'), resultInstance.id])
         redirect(action: "show", id: resultInstance.id)
     }
-
+	
+	@Secured(['ROLE_USER'])
     def delete(Long id) {
         def resultInstance = Result.get(id)
         if (!resultInstance) {
@@ -102,4 +110,13 @@ class ResultController {
             redirect(action: "show", id: id)
         }
     }
+	
+	private Integer getCurrentSession() {
+		Session.createCriteria().get {
+			projections {
+				max "id"
+			}
+		} as Integer
+	}
+
 }

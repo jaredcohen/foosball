@@ -2,7 +2,8 @@ package org.foosball
 
 import org.foosball.Playoff;
 import org.foosball.Session;
-import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.dao.DataIntegrityViolationException;
+import grails.plugins.springsecurity.Secured;
 
 class PlayoffController {
 
@@ -13,22 +14,20 @@ class PlayoffController {
     }
 
     def list(Integer id) {
-		Integer sessionId = null
+		Integer sessionId = getCurrentSession()
 		if (id) {
 			sessionId = id
 		}
-		if (!sessionId) {
-			sessionId = getCurrentSession()
-		}
 		def playoffInstanceList = Playoff.findAll(sort:'id', order: 'desc') { sessionId == sessionId }
-		playoffInstanceList
         [playoffInstanceList: playoffInstanceList, playoffInstanceTotal: Playoff.count(), sessionId: sessionId]
     }
 
+	@Secured(['ROLE_USER'])
     def create(Integer id) {
 		[playoffInstance: new Playoff(params), sessionId: id]
     }
 
+	@Secured(['ROLE_USER'])
     def save() {
         def playoffInstance = new Playoff(params)
         if (!playoffInstance.save(flush: true)) {
@@ -51,6 +50,7 @@ class PlayoffController {
         [playoffInstance: playoffInstance]
     }
 
+	@Secured(['ROLE_USER'])
     def edit(Long id) {
         def playoffInstance = Playoff.get(id)
         if (!playoffInstance) {
@@ -62,6 +62,7 @@ class PlayoffController {
         [playoffInstance: playoffInstance]
     }
 
+	@Secured(['ROLE_USER'])
     def update(Long id, Long version) {
         def playoffInstance = Playoff.get(id)
         if (!playoffInstance) {
@@ -91,6 +92,7 @@ class PlayoffController {
         redirect(action: "show", id: playoffInstance.id)
     }
 
+	@Secured(['ROLE_USER'])
     def delete(Long id) {
         def playoffInstance = Playoff.get(id)
         if (!playoffInstance) {

@@ -1,7 +1,7 @@
 dataSource {
-    pooled = true
-    driverClassName = "com.mysql.jdbc.Driver"
-    dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+	pooled = true
+			driverClassName = "com.mysql.jdbc.Driver"
+			dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
 }
 hibernate {
     cache.use_second_level_cache = true
@@ -20,14 +20,18 @@ environments {
     }
     test {
         dataSource {
-            dbCreate = "update"
-            url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+            dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
+            url = "jdbc:mysql://localhost:3306/foosball?useUnicode=yes&characterEncoding=UTF-8"
+            username = "foosball"
+            password = "f00sball"
         }
     }
     production {
-        dataSource {
-            dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+		dataSource {
+			dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
+			url = "jdbc:mysql://localhost:3306/foosball?useUnicode=yes&characterEncoding=UTF-8"
+			username = "foosball"
+			password = "f00sball"
             pooled = true
             properties {
                maxActive = -1

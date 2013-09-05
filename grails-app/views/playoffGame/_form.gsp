@@ -6,7 +6,7 @@
 		<g:message code="playoffGame.winner.label" default="Winner" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="winner" name="winner.id" from="${org.foosball.Team.list()}" optionKey="id" optionValue="name" required="true" value="${playoffGameInstance?.result?.winner?.id}" class="many-to-one"/>
+	<g:select id="winner" name="winner.id" from="${[playoffGameInstance?.result?.winner, playoffGameInstance?.result?.opponent]}" optionKey="id" optionValue="name" required="true" value="${playoffGameInstance?.result?.winner?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: playoffGameInstance, field: 'opponent', 'error')} required">
@@ -14,7 +14,7 @@
 		<g:message code="playoffGame.opponent.label" default="Opponent" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="opponent" name="opponent.id" from="${org.foosball.Team.list()}" optionKey="id" optionValue="name" required="true" value="${playoffGameInstance?.result?.opponent?.id}" class="many-to-one"/>
+	<g:select id="opponent" name="opponent.id" from="${[playoffGameInstance?.result?.winner, playoffGameInstance?.result?.opponent]}" optionKey="id" optionValue="name" required="true" value="${playoffGameInstance?.result?.opponent?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: playoffGameInstance, field: 'winnerScore', 'error')} required">
