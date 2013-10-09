@@ -14,7 +14,7 @@ class ResultController {
 
 	def list(Integer id) {
 		Integer sessionId = Session.getCurrentSession()
-		if (id) {
+		if (id >= 0) {
 			sessionId = id
 		}
 		def resultInstanceList = Result.findAll(sort:'id', order: 'desc') { sessionId == sessionId }

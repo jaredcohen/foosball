@@ -14,7 +14,7 @@ class TableController {
 
 	def table(Integer id) {
 		Integer sessionId = Session.getCurrentSession()
-		if (id) {
+		if (id >= 0) {
 			sessionId = id
 		}
 		def teamInstanceList = Team.findAll { session == sessionId }

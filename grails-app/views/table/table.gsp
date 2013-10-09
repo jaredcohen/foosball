@@ -14,6 +14,7 @@
 				<li><g:link class="list" controller="team" action="list"><g:message code="default.team.label" default="All Teams" /></g:link></li>
 				<li><g:link class="list" controller="person" action="list"><g:message code="default.person.label" default="All Players" /></g:link></li>
 				<li><g:link class="list" controller="result" action="list" id="${sessionId}"><g:message code="default.result.label" default="All Results" /></g:link></li>
+				<li><g:link class="create" controller="session" action="list"><g:message code="default.session.label" default="Start next session..." /></g:link></li>
 			</ul>
 		</div>
 		<div id="list-team" class="content scaffold-list" role="main">

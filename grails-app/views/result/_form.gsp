@@ -26,25 +26,3 @@
 	<g:field name="sessionId" type="number" value="${resultInstance.sessionId}" required=""/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: resultInstance, field: 'games', 'error')} ">
-	<label for="games">
-		<g:message code="result.games.label" default="Games" />
-		
-	</label>
-	
-<ul class="one-to-many">
-<g:each in="${resultInstance?.games?}" var="g">
-	<g:if test="${g?.winner.id != resultInstance?.winner.id}">
-	    <li><g:link controller="game" action="show" id="${g.id}">${g?.opponentScore} - ${g?.winnerScore}</g:link></li>
-	</g:if>
-	<g:else>
-	    <li><g:link controller="game" action="show" id="${g.id}">${g?.winnerScore} - ${g?.opponentScore}</g:link></li>
-	</g:else>
-</g:each>
-<li class="add">
-	<g:link controller="game" action="create" params="['result.id': resultInstance?.id, 'sessionId': resultInstance?.sessionId]">${message(code: 'default.add.label', args: [message(code: 'game.label', default: 'Game')])}</g:link>
-</li>
-</ul>
-
-</div>
-

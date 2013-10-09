@@ -28,19 +28,17 @@
 
 						<th><g:message code="person.name.label" default="Name" /></th>
 
-						<th><g:message code="person.goalDiff.label" default="Goal Diff" /></th>
+						<th><g:message code="person.goalDiff.label" default="Avg Goal Diff" /></th>
 
-						<th><g:message code="person.avgGoalsFor.label" default="Avg. Goals For" /></th>
-
-						<th><g:message code="person.avgGoalsAgainst.label" default="Avg Goals Against" /></th>
-					
 						<th><g:message code="person.record.label" default="Record" /></th>
 
 						<th><g:message code="person.winPct.label" default="Win %" /></th>
 					
-						<th><g:message code="person.record.label" default="Games Record" /></th>
+						<th><g:message code="person.record.label" default="Game Rec" /></th>
 
 						<th><g:message code="person.winPct.label" default="Game %" /></th>
+						
+						<th><g:message code="person.rating.label" default="Rating" /></th>
 						
 					</tr>
 				</thead>
@@ -52,12 +50,8 @@
 						
 						<td><g:link controller= "person" action="show" id="${personInstance.id}">${fieldValue(bean: personInstance, field: "name")}</g:link></td>
 
-						<td>${personInstance.getGoalDiff()}</td>
+						<td>${personInstance.getAvgGoalDiff()}</td>
 
-						<td>${personInstance.getAvgGoalsScoredPerGame()}</td>
-
-						<td>${personInstance.getAvgGoalsAgainstPerGame()}</td>
-					
 						<td>${personInstance.getWinCount()} - ${personInstance.getLossCount()}</td>
 						
 						<td>${personInstance.getWinPct()}</td>
@@ -65,6 +59,8 @@
 						<td>${personInstance.getGamesWon()} - ${personInstance.getGamesLost()}</td>
 						
 						<td>${personInstance.getGamesWinPct()}</td>
+
+						<td>${personInstance.getPlayerRating()}</td>
 						
 					</tr>
 				</g:each>

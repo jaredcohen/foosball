@@ -31,7 +31,29 @@
 				<g:hiddenField name="id" value="${playoffInstance?.id}" />
 				<g:hiddenField name="version" value="${playoffInstance?.version}" />
 				<fieldset class="form">
+					
 					<g:render template="form"/>
+				
+					<div class="fieldcontain ${hasErrors(bean: playoffInstance, field: 'games', 'error')} ">
+						<label for="games">
+							<g:message code="playoff.games.label" default="Games" />
+						</label>
+						
+						<ul class="one-to-many">
+						<g:each in="${playoffInstance?.games?}" var="g">
+							<g:if test="${g?.winner.id != playoffInstance?.winner.id}">
+							    <li><g:link controller="game" action="show" id="${g.id}">${g?.opponentScore} - ${g?.winnerScore}</g:link></li>
+							</g:if>
+							<g:else>
+							    <li><g:link controller="game" action="show" id="${g.id}">${g?.winnerScore} - ${g?.opponentScore}</g:link></li>
+							</g:else>
+						</g:each>
+						<li class="add">
+							<span class="property-value" aria-labelledby="games-label"><g:link controller="playoffGame" action="create" params="['result.id': playoffInstance?.id, 'sessionId': playoffInstance?.sessionId]">${message(code: 'default.add.label', args: [message(code: 'playoffGame.label', default: 'Game')])}</g:link></span>
+						</li>
+						</ul>
+					</div>
+				
 				</fieldset>
 				<fieldset class="buttons">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />

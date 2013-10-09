@@ -72,6 +72,24 @@
 						<span class="property-value" aria-labelledby="session-label">${teamInstance.getGoalDiff()}</span>
 					
 				</li>
+
+				<g:if test="${teamInstance?.getTeamsNotPlayed()}">
+				<li class="fieldcontain">
+					<span id="teams-not-played-label" class="property-label"><g:message code="team.teamsNotPlayed.label" default="Teams Not Played" /></span>
+					<g:each in="${teamInstance.getTeamsNotPlayed()}" var="notPlayed">
+						<span class="property-value" aria-labelledby="teams-label"><g:link controller="team" action="show" id="${notPlayed?.id}">${notPlayed?.name}</g:link></span>
+					</g:each>
+				</li>
+				</g:if>
+
+				<g:if test="${teamInstance?.getTeamsPlayed()}">
+				<li class="fieldcontain">
+					<span id="teams-played-label" class="property-label"><g:message code="team.teamsPlayed.label" default="Teams Played" /></span>
+					<g:each in="${teamInstance.getTeamsPlayed()}" var="played">
+						<span class="property-value" aria-labelledby="teams-label"><g:link controller="team" action="show" id="${played?.id}">${played?.name}</g:link></span>
+					</g:each>
+				</li>
+				</g:if>
 			
 			</ol>
 			<g:form>
