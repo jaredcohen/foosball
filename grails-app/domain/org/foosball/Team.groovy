@@ -4,7 +4,7 @@ class Team implements Comparable {
 
 	int id;
 	String name;
-	Integer session;
+	Integer sessionId;
 
 	static transients = [
 		'winCount',
@@ -183,7 +183,9 @@ class Team implements Comparable {
 			teamsPlayed.add(result.getOpponent());
 		}
 		losses.each { result ->
-			teamsPlayed.add(result.getWinner());
+			if (result.getWinner().getId() != 50) {
+				teamsPlayed.add(result.getWinner());
+			}
 		}
 		return teamsPlayed;
 	}
@@ -191,7 +193,7 @@ class Team implements Comparable {
 	List<Team> getTeamsNotPlayed() {
 		def c = Team.createCriteria();
 		List<Team> allTeams = c.list {
-			eq("session", session)
+			eq("sessionId", sessionId)
 			and {
 				ne("id", id)
 				
@@ -208,46 +210,48 @@ class Team implements Comparable {
 	
 	
 	Integer getFinalTeamPosition() {
-		Session sessionObject = Session.get(session);
+		Session sessionObject = Session.get(sessionId);
 		Integer finalPlayoffRoundNum = sessionObject.getFinalPlayoffRoundNum();
 		Playoff finalMatch = Playoff.createCriteria().get {
-			eq("sessionId", id)
+			eq("sessionId", sessionId)
 			and {
 				eq("roundNum", finalPlayoffRoundNum)
 				eq("finalMatch", true)
 			}
 		}
-		if (finalMatch != null) {
-			if (finalMatch.getWinner().equals(this)) {
+		if (finalMatch) {
+			if (finalMatch.getWinner().getId().equals(this.getId())) {
 				return 1;
 			}
-			if (finalMatch.getOpponent().equals(this)) {
+			if (finalMatch.getOpponent().getId().equals(this.getId())) {
 				return 2;
 			}
 		}
 		
+		/*
 		Playoff consolationMatch = Playoff.createCriteria().get {
-			eq("sessionId", id)
+			eq("sessionId", sessionId)
 			and {
 				eq("roundNum", finalPlayoffRoundNum)
 				eq("finalMatch", true)
 			}
 		}
-		if (consolationMatch != null) {
-			if (consolationMatch.getWinner().equals(this)) {
+		if (consolationMatch) {
+			if (consolationMatch.getWinner().getId().equals(this.getId())) {
 				return 3;
 			}
-			if (consolationMatch.getOpponent().equals(this)) {
+			if (consolationMatch.getOpponent().getId().equals(this.getId())) {
 				return 4;
 			}
 		}
+		*/
 	}
 	
 	Double getFinalTeamPositionRating() {
-		Session sessionObject = Session.get(session);
+		Session sessionObject = Session.get(sessionId);
 		Integer finalPlayoffRoundNum = sessionObject.getFinalPlayoffRoundNum();
 		Playoff finalMatch = Playoff.createCriteria().get {
-			eq("sessionId", id)
+			eq("sessionId", sessionId)
 			and {
 				eq("roundNum", finalPlayoffRoundNum)
 				eq("finalMatch", true)
@@ -262,8 +266,9 @@ class Team implements Comparable {
 			}
 		}
 		
+		/*
 		Playoff consolationMatch = Playoff.createCriteria().get {
-			eq("sessionId", id)
+			eq("sessionId", sessionId)
 			and {
 				eq("roundNum", finalPlayoffRoundNum)
 				eq("finalMatch", true)
@@ -277,6 +282,7 @@ class Team implements Comparable {
 				return 0.1;
 			}
 		}
+		*/
 	}
 
 	@Override
@@ -299,7 +305,7 @@ class Team implements Comparable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
-		result = prime * result + ((session == null) ? 0 : session.hashCode());
+		result = prime * result + ((sessionId == null) ? 0 : sessionId.hashCode());
 		return result;
 	}
 
@@ -314,10 +320,10 @@ class Team implements Comparable {
 		Team other = (Team) obj;
 		if (id != other.id)
 			return false;
-		if (session == null) {
-			if (other.session != null)
+		if (sessionId == null) {
+			if (other.sessionId != null)
 				return false;
-		} else if (!session.equals(other.session))
+		} else if (!sessionId.equals(other.sessionId))
 			return false;
 		return true;
 	}

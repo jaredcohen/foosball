@@ -14,16 +14,10 @@ class Result {
 			if (winner.id == instance.opponent.id) {
 				return 'winner and opponent must be different teams';
 			}
-			if (winner.session != instance.sessionId) {
-				return 'invalid session value for winner';
-			}
 		}
 		opponent validator: { opponent, instance ->
 			if (opponent.id == instance.winner.id) {
 				return 'winner and opponent must be different teams';
-			}
-			if (opponent.session != instance.sessionId) {
-				return 'invalid session value for opponent';
 			}
 		}
 	}
@@ -41,17 +35,17 @@ class Result {
 	Integer getGamesWonByWinner() {
 		Integer gamesWonByWinner = 0;
 		games.each { game ->
-			if (winner.equals(game.winner)) {
+			if (winner.id.equals(game.winner.id)) {
 				gamesWonByWinner += 1;
 			}
 		}
-		return gamesWonByWinner
+		return gamesWonByWinner;
 	}
 	
 	Integer getGamesWonByLoser() {
 		Integer gamesWonByLoser = 0;
 		games.each { game ->
-			if (opponent.equals(game.winner)) {
+			if (opponent.id.equals(game.winner.id)) {
 				gamesWonByLoser += 1;
 			}
 		}
@@ -61,9 +55,9 @@ class Result {
 	Integer getGoalsForWinner() {
 		Integer goalsForWinner = 0;
 		games.each { game ->
-			if (winner.equals(game.winner)) {
+			if (winner.id.equals(game.winner.id)) {
 				goalsForWinner += game.winnerScore;
-			} else if (winner.equals(game.opponent)) {
+			} else if (winner.id.equals(game.opponent.id)) {
 				goalsForWinner += game.opponentScore;
 			}
 		}
@@ -73,9 +67,9 @@ class Result {
 	Integer getGoalsForLoser() {
 		Integer goalsForLoser = 0;
 		games.each { game ->
-			if (opponent.equals(game.winner)) {
+			if (opponent.id.equals(game.winner.id)) {
 				goalsForLoser += game.winnerScore;
-			} else if (opponent.equals(game.opponent)) {
+			} else if (opponent.id.equals(game.opponent.id)) {
 				goalsForLoser += game.opponentScore;
 			}
 		}

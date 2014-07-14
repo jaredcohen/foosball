@@ -16,7 +16,7 @@ class Playoff {
 			if (winner.id == instance.opponent.id) {
 				return 'winner and opponent must be different teams';
 			}
-			if (winner.session != instance.sessionId) {
+			if (winner.sessionId != instance.sessionId) {
 				return 'invalid session value for winner';
 			}
 		}
@@ -24,7 +24,7 @@ class Playoff {
 			if (opponent.id == instance.winner.id) {
 				return 'winner and opponent must be different teams';
 			}
-			if (opponent.session != instance.sessionId) {
+			if (opponent.sessionId != instance.sessionId) {
 				return 'invalid session value for opponent';
 			}
 		}

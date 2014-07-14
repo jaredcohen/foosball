@@ -17,7 +17,7 @@ class PersonController {
 		
 		def personInstanceList = Person.findAll()
 		personInstanceList.sort()
-		[personInstanceList: personInstanceList, personInstanceTotal: Person.count()]
+		[personInstanceList: personInstanceList]
     }
 
 	@Secured(['ROLE_USER'])

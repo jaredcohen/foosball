@@ -133,20 +133,20 @@ class Person implements Comparable {
 	
 	Double getPlayerRating() {
 		//start with winning percentage
-		Double playerRating = getWinPct()/100;
+		Double playerRating = (getGamesWinPct() / 100) + (getWinPct() / 100);
 		//add 0.1 for each match played to account for players who've played less matches
-		playerRating += (getTotalGames() * 0.04);
+		playerRating += (getTotalGames() * 0.02);
 		//add average goal difference * 0.1
-		playerRating += (((getAvgGoalDiff()) * 0.5) + 5);
+		playerRating += ((getAvgGoalDiff()) * 0.25);
 		
 		teams.each { team ->
 			if (team.getFinalTeamPosition()) {
-				Double teamPositionRating = team.getFinalTeamPosition() / (Session.getCurrentSession() - team.getSession());
+				Double teamPositionRating = ((team.getFinalTeamPositionRating()) / ((Session.getCurrentSession() + 1) - team.getSessionId()));
 				playerRating += teamPositionRating;
 			}
 		}
 		
-		return ((playerRating * 10)).round(2);
+		return ((playerRating * 10) + 50).round(2);
 	}
 
 	@Override
@@ -180,14 +180,8 @@ class Person implements Comparable {
 	@Override
 	public int compareTo(Object o) {
 		def other = (Person) o;
-		if (other.getWinPct() != getWinPct()) {
-			return other.getWinPct().compareTo(getWinPct());
-		}
-		if (other.getGamesWon() != getGamesWon()) {
-			return other.getGamesWon().compareTo(getGamesWon());
-		}
-		if (other.getAvgGoalDiff() != getAvgGoalDiff()) {
-			return other.getAvgGoalDiff().compareTo(getAvgGoalDiff());
+		if (other.getPlayerRating() != getPlayerRating()) {
+			return other.getPlayerRating().compareTo(getPlayerRating());
 		}
 		return 0;
 	}

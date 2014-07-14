@@ -20,6 +20,10 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<g:form action="pickTeams" >
+				<fieldset class="buttons">
+					<g:submitButton name="pickTeams" class="save" value="Pick teams" />
+					<g:checkBox name="markUnplayedGamesAsLosses"/>Mark unplayed games as losses? </span>
+				</fieldset>
 				<g:each in="${personInstanceList}" status="i" var="personInstance">
 					<fieldset class="form">
 						<tr class="fieldcontain ${hasErrors(bean: personInstance, field: 'name', 'error')} ">

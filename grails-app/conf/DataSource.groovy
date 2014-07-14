@@ -16,6 +16,17 @@ environments {
             url = "jdbc:mysql://localhost:3306/foosball?useUnicode=yes&characterEncoding=UTF-8"
             username = "foosball"
             password = "f00sball"
+            pooled = true
+			properties {
+				maxActive = -1
+				minEvictableIdleTimeMillis=1800000
+				timeBetweenEvictionRunsMillis=1800000
+				numTestsPerEvictionRun=3
+				testOnBorrow=true
+				testWhileIdle=true
+				testOnReturn=true
+				validationQuery="SELECT 1"
+			}
         }
     }
     test {
@@ -24,6 +35,17 @@ environments {
             url = "jdbc:mysql://localhost:3306/foosball?useUnicode=yes&characterEncoding=UTF-8"
             username = "foosball"
             password = "f00sball"
+			pooled = true
+			properties {
+				maxActive = -1
+				minEvictableIdleTimeMillis=1800000
+				timeBetweenEvictionRunsMillis=1800000
+				numTestsPerEvictionRun=3
+				testOnBorrow=true
+				testWhileIdle=true
+				testOnReturn=true
+				validationQuery="SELECT 1"
+			}
         }
     }
     production {

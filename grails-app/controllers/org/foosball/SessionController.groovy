@@ -22,7 +22,10 @@ class SessionController {
 
 	def pickTeams() {
 		def sessionId = Session.getCurrentSession();
-		
+		if (params.markUnplayedGamesAsLosses) {
+			markUnplayedGamesAsLosses(sessionId);
+		}
+
 		List<Person> players = new ArrayList<Person>();
 		for (int i = 1; i <= Person.count(); i++) {
 			if (params.get(i.toString())) {
@@ -46,6 +49,9 @@ class SessionController {
 		Session newSession = new Session('description': createNewSessionDescription());
 		newSession.id = newSessionId;
 		if (newSession.save()) {
+			//Any unplayed games are set as losses
+			
+			//Create New Teams
 			List<Team> newTeams = createNewTeams(upperTier, lowerTier, sessionId);
 			newTeams.each { team ->
 				if (!team.save()) {
@@ -56,6 +62,26 @@ class SessionController {
 			flash.message = "An error occurred saving the new session to the db.";
 		}
 		redirect(controller: "table", action: "index")
+	}
+	
+	def markUnplayedGamesAsLosses(Integer id) {
+		if (id == null || Session.get(id) == null) {
+			flash.message = "An invalid session number was provided";
+			redirect(controller: "table", action: "index");
+		}
+		def teamDidNotPlay = Team.find { name == 'DNP' };
+		def teamInstanceList = Team.findAll { sessionId == id };
+		teamInstanceList.each { team ->
+			def unplayedTeamsCount = team.getTeamsNotPlayed().size();
+			if (unplayedTeamsCount > 0 ) {
+				for (int i = 0; i < unplayedTeamsCount; i++) {
+					def dnpResult = new Result(['winner': teamDidNotPlay, 'opponent': team, 'sessionId': id]);
+					if (!dnpResult.save()) {
+						flash.message = "An error occurred marking uplayed games from last session as losses for team: " + team.getName() + ". The other teams should not be affected however.";
+					}
+				}
+			}
+		}
 	}
 	
 	private List<Team> createNewTeams(List<Person> upperTier, List<Person> lowerTier, Integer sessionId) {
@@ -75,7 +101,7 @@ class SessionController {
 					teamsValid = false;
 				}
 			}
-			newTeams.add(new Team(['name': upperTierPartner.getName() + ' & ' + lowerTierPartner.getName(), 'members': [upperTierPartner, lowerTierPartner], 'session': sessionId + 1]));
+			newTeams.add(new Team(['name': upperTierPartner.getName() + ' & ' + lowerTierPartner.getName(), 'members': [upperTierPartner, lowerTierPartner], 'sessionId': sessionId + 1]));
 		}
 		if (!teamsValid) {
 			return createNewTeams(upperTier, lowerTier, sessionId);
@@ -88,7 +114,7 @@ class SessionController {
 		Set<Team> teams = person.getTeams();
 		Team lastTeam = null;
 		teams.each { team ->
-			if (team.getSession() == sessionId) {
+			if (team.getSessionId() == sessionId) {
 				lastTeam = team;
 			}
 		}

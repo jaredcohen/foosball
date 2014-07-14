@@ -17,7 +17,7 @@ class TableController {
 		if (id >= 0) {
 			sessionId = id
 		}
-		def teamInstanceList = Team.findAll { session == sessionId }
+		def teamInstanceList = Team.findAll { sessionId == sessionId }
 		teamInstanceList.sort()
 
 		def finalMatchInstance = Playoff.find { 
@@ -31,10 +31,10 @@ class TableController {
 				finalMatch == false
 				roundNum == finalMatchInstance.roundNum
 			}
-			return [teamInstanceList: teamInstanceList, teamInstanceTotal: Team.count(), sessionList: Session.list(), sessionId: sessionId, finalMatch: finalMatchInstance, consolationMatch: consolationMatchInstance]
+			return [teamInstanceList: teamInstanceList, teamInstanceTotal: Team.count(), sessionList: Session.findAll { id != 0 }, sessionId: sessionId, finalMatch: finalMatchInstance, consolationMatch: consolationMatchInstance]
 		}
 		
-		[teamInstanceList: teamInstanceList, teamInstanceTotal: Team.count(), sessionList: Session.list(), sessionId: sessionId, finalMatch: finalMatchInstance]
+		[teamInstanceList: teamInstanceList, teamInstanceTotal: Team.count(), sessionList: Session.findAll { id != 0 }, sessionId: sessionId, finalMatch: finalMatchInstance]
 	}
 
 }

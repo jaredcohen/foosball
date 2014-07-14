@@ -43,11 +43,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${teamInstance?.session}">
+				<g:if test="${teamInstance?.sessionId}">
 				<li class="fieldcontain">
-					<span id="session-label" class="property-label"><g:message code="team.session.label" default="Session" /></span>
+					<span id="session-label" class="property-label"><g:message code="team.sessionId.label" default="Session" /></span>
 					
-						<span class="property-value" aria-labelledby="session-label"><g:fieldValue bean="${teamInstance}" field="session"/></span>
+						<span class="property-value" aria-labelledby="session-label"><g:fieldValue bean="${teamInstance}" field="sessionId"/></span>
 					
 				</li>
 				</g:if>

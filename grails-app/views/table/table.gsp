@@ -4,8 +4,8 @@
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'team.label', default: 'Team')}" />
-		<title><g:message code="default.list.label" args="[entityName]" /></title>
+		<g:set var="entityName" value="${message(code: 'table.label', default: 'Table')}" />
+		<title>Foosball Table</title>
 	</head>
 	<body>
 		<a href="#list-team" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>

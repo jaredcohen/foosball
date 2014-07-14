@@ -23,6 +23,6 @@
 		<g:message code="team.session.label" default="Session" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field name="session" type="number" value="${teamInstance.session}" required=""/>
+	<g:field name="sessionId" type="number" value="${teamInstance.sessionId}" required=""/>
 </div>
 

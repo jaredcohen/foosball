@@ -7,7 +7,7 @@
 		<g:message code="result.winner.label" default="Winner" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="winner" name="winner.id" from="${org.foosball.Team.findAll { session == resultInstance.sessionId }}" optionKey="id" optionValue="name" required="true" value="${resultInstance?.winner?.id}" class="many-to-one"/>
+	<g:select id="winner" name="winner.id" from="${org.foosball.Team.findAll { sessionId == resultInstance.sessionId }}" optionKey="id" optionValue="name" required="true" value="${resultInstance?.winner?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: resultInstance, field: 'opponent', 'error')} required">
@@ -15,7 +15,7 @@
 		<g:message code="result.opponent.label" default="Opponent" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="opponent" name="opponent.id" from="${org.foosball.Team.findAll { session == resultInstance.sessionId }}" optionKey="id" optionValue="name" required="true" value="${resultInstance?.opponent?.id}" class="many-to-one"/>
+	<g:select id="opponent" name="opponent.id" from="${org.foosball.Team.findAll { sessionId == resultInstance.sessionId }}" optionKey="id" optionValue="name" required="true" value="${resultInstance?.opponent?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: resultInstance, field: 'sessionId', 'error')} required">
