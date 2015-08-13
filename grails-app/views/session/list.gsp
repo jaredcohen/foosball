@@ -22,7 +22,7 @@
 			<g:form action="pickTeams" >
 				<fieldset class="buttons">
 					<g:submitButton name="pickTeams" class="save" value="Pick teams" />
-					<g:checkBox name="markUnplayedGamesAsLosses"/>Mark unplayed games as losses? </span>
+					<g:checkBox name="markUnplayedGamesAsLosses" value="${false}"/>Mark unplayed games as losses? </span>
 				</fieldset>
 				<g:each in="${personInstanceList}" status="i" var="personInstance">
 					<fieldset class="form">

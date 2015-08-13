@@ -17,7 +17,8 @@ class SessionController {
 	}
 
 	def list() {
-		[personInstanceList: Person.list()]
+		def personInstanceList = Person.findAllByActive(true)
+		[personInstanceList: personInstanceList]
 	}
 
 	def pickTeams() {

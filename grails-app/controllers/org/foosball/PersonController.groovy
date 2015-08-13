@@ -15,7 +15,7 @@ class PersonController {
     def list(Integer max) {
         params.max = Math.min(max ?: 20, 100)
 		
-		def personInstanceList = Person.findAll()
+		def personInstanceList = Person.findAllByActive(true)
 		personInstanceList.sort()
 		[personInstanceList: personInstanceList]
     }

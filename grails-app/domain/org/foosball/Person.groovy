@@ -4,6 +4,7 @@ class Person implements Comparable {
 
 	int id;
 	String name;
+	boolean active;
 
 	static belongsTo = org.foosball.Team;
 

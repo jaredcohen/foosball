@@ -15,7 +15,7 @@ environments {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:mysql://localhost:3306/foosball?useUnicode=yes&characterEncoding=UTF-8"
             username = "foosball"
-            password = "f00sball"
+            password = "P7jMg?4t"
             pooled = true
 			properties {
 				maxActive = -1
@@ -34,7 +34,7 @@ environments {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:mysql://localhost:3306/foosball?useUnicode=yes&characterEncoding=UTF-8"
             username = "foosball"
-            password = "f00sball"
+            password = "P7jMg?4t"
 			pooled = true
 			properties {
 				maxActive = -1
@@ -53,7 +53,7 @@ environments {
 			dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
 			url = "jdbc:mysql://localhost:3306/foosball?useUnicode=yes&characterEncoding=UTF-8"
 			username = "foosball"
-			password = "f00sball"
+			password = "P7jMg?4t"
             pooled = true
             properties {
                maxActive = -1
